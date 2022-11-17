@@ -6,6 +6,7 @@ import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
 import { Quantity } from "../styles/ProductDetails";
 import getStripe from "../lib/stripe";
 
+
 const card={
     show:{opacity: 1, scale:1, transition:{duration:0.3}},
     hidden:{opacity:0,scale:0.5}
@@ -26,21 +27,22 @@ const cards={
 
 export const Cart = () => {
 
- 
+ async function handleCheckout(){
+    const stripe= await getStripe();
+    const response=await fetch("/api/stripe",{
+      method:"POST",
+      headers:{'Content-Type':"application/json"},
+      body:JSON.stringify(cartItems)
+    })
+    const data=await response.json();
+   
+  
+    await stripe.redirectToCheckout({sessionId:data.id})
+  }
 
   const { cartItems,totalPrice,setTotalPrice, totalQuantity ,qty,showCart,setShowCart,removeTotalQuantity,onAdd } = useStateContext();
 
-  async function handleCheckout(){
-    const stripe= await getStripe()
-    const response=await fetch('/api/stripe',{
-      method:"POST",
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify(cartItems)
-    });
-    const data= await response.json()
-    await stripe.redirectToCheckOut({sessionId: data.id})
-  
-    }
+
 
   return (
     <CartBox exit={{opacity:0}} initial={{opacity:0}} animate={{opacity:1, transition:{duration:0.4}}} onClick={()=>setShowCart(!showCart)}>
