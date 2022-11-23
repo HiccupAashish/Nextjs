@@ -9,12 +9,20 @@ import {
 } from "../../styles/ProductDetails";
 import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
 import { useStateContext } from "../../lib/context";
+import toast from "react-hot-toast";
 
 
 export default function Test() {
   const {qty,IncreaseQty,DecreaseQty,onAdd}=useStateContext()
 
   const { query } = useRouter();
+  function notify(title){
+ toast.success(`${title} Added Succesfully to Cart`,{
+  duration: 1000,
+  position: 'top-center',
+ })
+console.log("Hey")
+  }
   
   const [results] = useQuery({
     query: GET_PRODUCT_DATA,
@@ -45,7 +53,8 @@ export default function Test() {
             <AiFillPlusCircle onClick={IncreaseQty} />
           </button>
         </Quantity>
-        <Buy onClick={()=>onAdd(qty,data.products.data[0].attributes)}>Add to Cart</Buy>
+        <Buy onClick={()=>{onAdd(qty,data.products.data[0].attributes);
+          notify(Title);}}>Add to Cart</Buy>
       </ProductInfo>
     </DetailBox>
   );

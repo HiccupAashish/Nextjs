@@ -14,7 +14,7 @@ padding: 1rem 1rem;
 export const NavItems=styled.div`
 display: flex;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
     padding-top: 2vh;
     position: relative;
     justify-content: space-around;
@@ -25,11 +25,18 @@ display: flex;
         font-size: 1.5rem;
         color:red;
     }
+    div{
+        display: flex;
+        flex-direction:column;
+        align-items: center;
+        margin-right: 1em;
+    }
     span{
         position: absolute;
-        top:20%;
+        top:40%;
         z-index: 0;
-        right: -15%;
+        right: -6%;
+        opacity: -1;
 
         width:1rem;
         height: 1rem;
